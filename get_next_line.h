@@ -1,0 +1,11 @@
+char			*ft_strchr(const char *s, int c);
+char			*ft_strcat(char *s1, const char *s2);
+char			*ft_strcpy(char *dst, const char *src);
+char			*ft_strjoin(char const *s1, char const *s2);
+size_t			ft_strlen(const char *str);
+char			*ft_strcpy(char *dst, const char *src);
+char			*ft_strcat(char *s1, const char *s2);
+char			*ft_strdup(const char *s1);
+char			*ft_substr(char const *s, unsigned int start, size_t len);
+void			*ft_strnew(size_t size);
+void			ft_bzero(void *s, size_t n);
