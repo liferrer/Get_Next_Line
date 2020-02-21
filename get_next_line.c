@@ -6,7 +6,7 @@
 /*   By: liferrer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/15 18:26:48 by liferrer          #+#    #+#             */
-/*   Updated: 2019/01/23 18:01:45 by liferrer         ###   ########.fr       */
+/*   Updated: 2020/02/19 17:45:41 by liferrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,9 +55,7 @@ static int	ft_suite_gnl(t_fd *current, char **line, t_fd **first_fd)
 
 	i = 0;
 	if (ft_strlen(current->reste) == 0)
-	{
 		return (0);
-	}
 	if (ft_strchr(current->reste, '\n'))
 	{
 		while ((current->reste)[i] && (current->reste)[i] != '\n')
@@ -77,7 +75,7 @@ int		get_next_line(const int fd, char **line)
 {
 	t_fd			*current;
 	static t_fd		*first_fd;
-	char			buff[BUFF_SIZE + 1];
+	char			buff[BUFFER_SIZE + 1];
 	char			*tmp;
 	int				ret;
 
@@ -85,7 +83,7 @@ int		get_next_line(const int fd, char **line)
 			(!(current = ft_diff_fd(&first_fd, fd))))
 		return (-1);
 	while ((!(ft_strchr(current->reste, '\n'))) &&
-			((ret = read(fd, buff, BUFF_SIZE)) > 0))
+			((ret = read(fd, buff, BUFFER_SIZE)) > 0))
 	{
 		buff[ret] = '\0';
 		tmp = current->reste;
@@ -95,4 +93,3 @@ int		get_next_line(const int fd, char **line)
 	}
 	return (ft_suite_gnl(current, line, &first_fd));
 }
-

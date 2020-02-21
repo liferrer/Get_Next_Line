@@ -1,3 +1,17 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_next_line_utils.c                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: liferrer <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/02/19 17:21:34 by liferrer          #+#    #+#             */
+/*   Updated: 2020/02/21 16:53:12 by liferrer         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "get_next_line.h"
+
 char	*ft_strchr(const char *s, int c)
 {
 	char	*str;
@@ -61,8 +75,11 @@ char		*ft_strjoin(char const *s1, char const *s2)
 {
 	char	*str;
 
-	if (!s1 || !s2)
-		return (NULL);
+	if (!s2)
+	{
+		str = ft_strdup(s1);
+		free(s1);
+	}
 	if (!(str = (char*)malloc(sizeof(char) *
 					(ft_strlen(s1) + ft_strlen(s2) + 1))))
 		return (NULL);
@@ -79,39 +96,6 @@ size_t		ft_strlen(const char *str)
 	while (str[i] != '\0')
 		i++;
 	return (i);
-}
-
-char		*ft_strcpy(char *dst, const char *src)
-{
-	size_t	i;
-
-	i = 0;
-	while (src[i])
-	{
-		dst[i] = src[i];
-		i++;
-	}
-	dst[i] = '\0';
-	return (dst);
-}
-
-char		*ft_strcat(char *s1, const char *s2)
-{
-	int i;
-	int j;
-
-	i = 0;
-	j = 0;
-	while (s1[i] != '\0')
-		i++;
-	while (s2[j] != '\0')
-	{
-		s1[i] = s2[j];
-		i++;
-		j++;
-	}
-	s1[i] = '\0';
-	return (s1);
 }
 
 char		*ft_strdup(const char *s1)
