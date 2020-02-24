@@ -6,7 +6,7 @@
 /*   By: liferrer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/15 18:26:48 by liferrer          #+#    #+#             */
-/*   Updated: 2020/02/19 17:45:41 by liferrer         ###   ########.fr       */
+/*   Updated: 2020/02/24 16:05:10 by liferrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ t_fd		*ft_diff_fd(t_fd **first_fd, int fd)
 	if (!(new = (t_fd*)malloc(sizeof(t_fd))))
 		return (NULL);
 	new->fd = fd;
-	new->reste = ft_strnew(0);
+	new->reste = ft_strdup("");
 	new->next = *first_fd;
 	*first_fd = new;
 	return (new);
@@ -62,7 +62,7 @@ static int	ft_suite_gnl(t_fd *current, char **line, t_fd **first_fd)
 			i++;
 		if (!(*line = ft_substr(current->reste, 0, i)))
 			return (-1);
-		ft_strcpy(current->reste, current->reste + i + 1);
+		current->reste = ft_strdup(current->reste + i + 1);
 		return (1);
 	}
 	if (!(*line = ft_strdup(current->reste)))
