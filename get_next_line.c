@@ -76,20 +76,21 @@ int		get_next_line(const int fd, char **line)
 	t_fd			*current;
 	static t_fd		*first_fd;
 	char			buff[BUFFER_SIZE + 1];
-	char			*tmp;
-	int				ret;
+	int			ret;
+	int			retsuite;
 
 	if ((read(fd, NULL, 0) < 0) || !line ||
 			(!(current = ft_diff_fd(&first_fd, fd))))
 		return (-1);
 	while ((!(ft_strchr(current->reste, '\n'))) &&
-			((ret = read(fd, buff, BUFFER_SIZE)) > 0))
+            ((ret = read(fd, buff, BUFFER_SIZE)) > 0))
 	{
 		buff[ret] = '\0';
-		tmp = current->reste;
 		if (!(current->reste = ft_strjoin(current->reste, buff)))
 			return (-1);
-		free(tmp);
 	}
-	return (ft_suite_gnl(current, line, &first_fd));
+	retsuite = ft_suite_gnl(current, line, &first_fd);
+	if (*line[0] == '\0')
+		*line = ft_strdup("");
+	return (ret == 0 ? 0 : retsuite);
 }

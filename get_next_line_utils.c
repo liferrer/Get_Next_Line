@@ -111,6 +111,7 @@ char	*ft_strjoin(char *s1, char *s2)
 		j++;
 	}
 	cpy[i] = '\0';
+	free(s1);
 	return (cpy);
 }
 
