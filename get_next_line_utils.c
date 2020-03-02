@@ -5,115 +5,12 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: liferrer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/02/19 17:21:34 by liferrer          #+#    #+#             */
-/*   Updated: 2020/02/24 15:45:56 by liferrer         ###   ########.fr       */
+/*   Created: 2020/03/02 16:37:24 by liferrer          #+#    #+#             */
+/*   Updated: 2020/03/02 16:37:38 by liferrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-
-size_t		ft_strlen(const char *str)
-{
-	size_t i;
-
-	i = 0;
-	while (str[i] != '\0')
-		i++;
-	return (i);
-}
-
-char	*ft_strchr(const char *s, int c)
-{
-	char	*str;
-	int		i;
-
-	str = (char *)s;
-	i = 0;
-	if (c == 0)
-	{
-		while (*str != '\0')
-			str++;
-		return (str);
-	}
-	while (str[i] != '\0')
-	{
-		if (str[i] == c)
-		{
-			while (i--)
-				str++;
-			return (str);
-		}
-		i++;
-	}
-	return (NULL);
-}
-
-char		*ft_strdup(char *s1)
-{
-	char	*str;
-	int		i;
-
-	i = 0;
-	if (!(str = (char *)malloc(sizeof(char) * ft_strlen((char*)s1) + 1)))
-		return (NULL);
-	while (s1[i])
-	{
-		str[i] = s1[i];
-		i++;
-	}
-	str[i] = '\0';
-	if (s1)
-	{
-		s1 = NULL;
-		free(s1);
-	}
-	return (str);
-}
-
-char	*ft_strcat(char *s1, char *s2)
-{
-	int i;
-	int j;
-
-	i = 0;
-	j = 0;
-	while (s1[i] != '\0')
-		i++;
-	while (s2[j] != '\0')
-	{
-		s1[i] = s2[j];
-		i++;
-		j++;
-	}
-	s1[i] = '\0';
-	return (s1);
-}
-
-char	*ft_strjoin(char *s1, char *s2)
-{
-	int		i;
-	int		j;
-	char	*cpy;
-	i = 0;
-	j = 0;
-	if (!(cpy = (char *)malloc(sizeof(char)
-	* (ft_strlen(s1) + ft_strlen(s2) + 1))))
-		return (0);
-	while (s1[i] != '\0')
-	{
-		cpy[i] = s1[i];
-		i++;
-	}
-	while (s2[j] != '\0')
-	{
-		cpy[i] = s2[j];
-		i++;
-		j++;
-	}
-	cpy[i] = '\0';
-	free(s1);
-	return (cpy);
-}
 
 char		*ft_substr(char const *s, unsigned int start, size_t len)
 {
@@ -138,4 +35,3 @@ char		*ft_substr(char const *s, unsigned int start, size_t len)
 	str[j] = '\0';
 	return (str);
 }
-
