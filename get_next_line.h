@@ -6,7 +6,7 @@
 /*   By: liferrer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/02 14:53:18 by liferrer          #+#    #+#             */
-/*   Updated: 2020/03/03 12:52:56 by liferrer         ###   ########.fr       */
+/*   Updated: 2020/03/04 14:32:58 by liferrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 # include <stdio.h>
 # include <fcntl.h>
 # include <limits.h>
-//# define BUFFER_SIZE 42
 
 size_t		ft_strlen(const char *str);
 char		*ft_strchr(char *s, int c);
