@@ -6,7 +6,7 @@
 /*   By: liferrer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/02 14:51:29 by liferrer          #+#    #+#             */
-/*   Updated: 2020/03/04 14:50:55 by liferrer         ###   ########.fr       */
+/*   Updated: 2020/03/04 15:51:56 by liferrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int		get_next_line(int fd, char **line)
 
 	i = 0;
 	ret = 0;
-	if (fd < 0 || fd > OPEN_MAX || !line || read(fd, buffer, 0))
+	if (fd < 0 || fd > OPEN_MAX || !line)
 		return (-1);
 	if (!stock)
 		stock = ft_strdup("");
@@ -42,7 +42,7 @@ int		get_next_line(int fd, char **line)
 	tmp = stock;
 	stock = ft_strjoin(stock, buffer);
 	free(tmp);
-	if (ret < BUFFER_SIZE && (ft_strchr(stock, '\n') == NULL))
+	if (ret < BUFFER_SIZE)
 	{
 		*line = ft_strdup(stock);
 		stock = ft_strdup("");
