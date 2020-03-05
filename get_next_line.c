@@ -6,7 +6,7 @@
 /*   By: liferrer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/02 14:51:29 by liferrer          #+#    #+#             */
-/*   Updated: 2020/03/05 11:33:19 by liferrer         ###   ########.fr       */
+/*   Updated: 2020/03/05 11:36:46 by liferrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,31 +26,18 @@ int		get_stock_split(char **stock, char **line)
 
 int		get_next_line(int fd, char **line)
 {
-	int				i;
 	int				ret;
 	static char		*stock = NULL;
 	char			*tmp;
 	char			buffer[BUFFER_SIZE + 1];
 
-	i = 0;
 	ret = 0;
 	if (fd < 0 || fd > OPEN_MAX || !line)
 		return (-1);
 	if (!stock)
 		stock = ft_strdup("");
-	if (stock[0] != '\0')
-	{
-		if (ft_strchr(stock, '\n'))
+	if (stock[0] != '\0' && ft_strchr(stock, '\n'))
 			return (get_stock_split(&stock, line));
-		/*		if (ft_strchr(stock, '\n'))
-				{
-				while (stock[i] != '\n')
-				i++;
-		 *line = ft_substr(stock, 0, i);
-		 stock = ft_substr(stock, i + 1, (ft_strlen(stock) - i - 1));
-		 return (1);
-		 }*/
-	}
 	ret = read(fd, buffer, BUFFER_SIZE);
 	buffer[BUFFER_SIZE] = '\0';
 	tmp = stock;
