@@ -6,7 +6,7 @@
 /*   By: liferrer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/02 14:51:29 by liferrer          #+#    #+#             */
-/*   Updated: 2020/03/05 11:36:46 by liferrer         ###   ########.fr       */
+/*   Updated: 2020/03/05 12:17:43 by liferrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,21 @@
 int		get_stock_split(char **stock, char **line)
 {
 	int				i;
+	char			*tmp;
 
 	i = 0;
 	while ((*stock)[i] != '\n')
 		i++;
 	*line = ft_substr(*stock, 0, i);
+	tmp = *stock;
 	*stock = ft_substr(*stock, i + 1, (ft_strlen(*stock) - i - 1));
+	free(tmp);
 	return (1);
+}
+
+int		dealwith_eof(char **stock, char **line)
+{
+
 }
 
 int		get_next_line(int fd, char **line)
@@ -37,7 +45,7 @@ int		get_next_line(int fd, char **line)
 	if (!stock)
 		stock = ft_strdup("");
 	if (stock[0] != '\0' && ft_strchr(stock, '\n'))
-			return (get_stock_split(&stock, line));
+		return (get_stock_split(&stock, line));
 	ret = read(fd, buffer, BUFFER_SIZE);
 	buffer[BUFFER_SIZE] = '\0';
 	tmp = stock;
@@ -46,7 +54,9 @@ int		get_next_line(int fd, char **line)
 	if (ret < BUFFER_SIZE)
 	{
 		*line = ft_strdup(stock);
+		tmp = stock;
 		stock = ft_strdup("");
+		free(tmp);
 		return (0);
 	}
 	return (get_next_line(fd, line));
@@ -70,5 +80,6 @@ int		main(void)
 		free(line);
 	}
 	printf("|%d|%s\n", ret, line);
+	while (1);
 	free(line);
 }
