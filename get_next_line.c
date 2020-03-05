@@ -6,11 +6,23 @@
 /*   By: liferrer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/02 14:51:29 by liferrer          #+#    #+#             */
-/*   Updated: 2020/03/04 15:51:56 by liferrer         ###   ########.fr       */
+/*   Updated: 2020/03/05 11:33:19 by liferrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+
+int		get_stock_split(char **stock, char **line)
+{
+	int				i;
+
+	i = 0;
+	while ((*stock)[i] != '\n')
+		i++;
+	*line = ft_substr(*stock, 0, i);
+	*stock = ft_substr(*stock, i + 1, (ft_strlen(*stock) - i - 1));
+	return (1);
+}
 
 int		get_next_line(int fd, char **line)
 {
@@ -29,13 +41,15 @@ int		get_next_line(int fd, char **line)
 	if (stock[0] != '\0')
 	{
 		if (ft_strchr(stock, '\n'))
-		{
-			while (stock[i] != '\n')
+			return (get_stock_split(&stock, line));
+		/*		if (ft_strchr(stock, '\n'))
+				{
+				while (stock[i] != '\n')
 				i++;
-			*line = ft_substr(stock, 0, i);
-			stock = ft_substr(stock, i + 1, (ft_strlen(stock) - i - 1));
-			return (1);
-		}
+		 *line = ft_substr(stock, 0, i);
+		 stock = ft_substr(stock, i + 1, (ft_strlen(stock) - i - 1));
+		 return (1);
+		 }*/
 	}
 	ret = read(fd, buffer, BUFFER_SIZE);
 	buffer[BUFFER_SIZE] = '\0';
@@ -65,9 +79,9 @@ int		main(void)
 			printf("error\n");
 			return(-1);
 		}
-		printf("%s\n", line);
-		printf("line ret: %d\n", ret);
+		printf("|%d|%s\n", ret, line);
 		free(line);
 	}
-	printf("end ret: %d\n", ret);
+	printf("|%d|%s\n", ret, line);
+	free(line);
 }
