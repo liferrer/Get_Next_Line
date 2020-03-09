@@ -6,13 +6,13 @@
 /*   By: liferrer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 12:02:15 by liferrer          #+#    #+#             */
-/*   Updated: 2020/03/04 14:40:31 by liferrer         ###   ########.fr       */
+/*   Updated: 2020/03/05 13:48:31 by liferrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-size_t		ft_strlen(const char *str)
+size_t			ft_strlen(const char *str)
 {
 	size_t i;
 
@@ -22,7 +22,7 @@ size_t		ft_strlen(const char *str)
 	return (i);
 }
 
-char	*ft_strchr(char *s, int c)
+char			*ft_strchr(char *s, int c)
 {
 	char	*str;
 	int		i;
@@ -48,7 +48,7 @@ char	*ft_strchr(char *s, int c)
 	return (NULL);
 }
 
-char		*ft_strdup(char *s1)
+char			*ft_strdup(char *s1)
 {
 	char	*str;
 	int		i;
@@ -70,11 +70,12 @@ char		*ft_strdup(char *s1)
 	return (str);
 }
 
-char	*ft_strjoin(char *s1, char *s2)
+char			*ft_strjoin(char *s1, char *s2)
 {
 	int		i;
 	int		j;
 	char	*cpy;
+
 	i = 0;
 	j = 0;
 	if (!(cpy = (char *)malloc(sizeof(char)
@@ -95,7 +96,7 @@ char	*ft_strjoin(char *s1, char *s2)
 	return (cpy);
 }
 
-char		*ft_substr(char const *s, unsigned int start, size_t len)
+char			*ft_substr(char const *s, unsigned int start, size_t len)
 {
 	unsigned int	i;
 	unsigned int	j;
