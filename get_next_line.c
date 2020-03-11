@@ -6,7 +6,7 @@
 /*   By: liferrer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/02 14:51:29 by liferrer          #+#    #+#             */
-/*   Updated: 2020/03/05 17:28:47 by liferrer         ###   ########.fr       */
+/*   Updated: 2020/03/11 16:48:11 by liferrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,10 @@ int		get_stock_split(char **stock, char **line)
 	char			*tmp;
 
 	i = 0;
+//	printf("dealing with getstocksplit %s\n", *stock);
 	while ((*stock)[i] != '\n')
 		i++;
-	*line = ft_substr(*stock, 0, i - 1);
+	*line = ft_substr(*stock, 0, i);
 	tmp = *stock;
 	*stock = ft_substr(*stock, i + 1, (ft_strlen(*stock) - i - 1));
 	free(tmp);
@@ -30,13 +31,14 @@ int		get_stock_split(char **stock, char **line)
 int		dealwith_eof(char **stock, char **line)
 {
 	char			*tmp;
+	int				i;
 
+	i = 0;
+//	printf("dealing with eof %s\n", *stock);
 	*line = ft_strdup(*stock);
 	tmp = *stock;
 	*stock = ft_strdup("");
 	free(tmp);
-	if (ft_strchr(*stock, '\n'))
-		return (1);
 	return (0);
 
 }
@@ -44,32 +46,28 @@ int		dealwith_eof(char **stock, char **line)
 int		get_next_line(int fd, char **line)
 {
 	int				ret;
-	static char		*stock = NULL;
-	char			*tmp;
 	char			buffer[BUFFER_SIZE + 1];
+	static char		*stock = NULL;
 
 	ret = 0;
 	if (fd < 0 || fd > OPEN_MAX || !line || !fd)
 		return (-1);
-
 	if (!stock)
-		stock = ft_strdup("");
-
+		stock =ft_strdup("");
+	if (!ft_strchr(stock, '\n'))
+	{
+		ret = read(fd, buffer, BUFFER_SIZE);
+		buffer[BUFFER_SIZE] = '\0';
+		stock = ft_strjoin(stock, buffer);
+	}
 	if (ft_strchr(stock, '\n'))
-			return (get_stock_split(&stock, line));
-
-	ret = read(fd, buffer, BUFFER_SIZE);
-	buffer[BUFFER_SIZE] = '\0';
-	tmp = stock;
-	stock = ft_strjoin(stock, buffer);
-	free(tmp);
-
-	if (ret < BUFFER_SIZE && !(ft_strchr(stock, '\n')))
+		return (get_stock_split(&stock, line));
+	else if (ft_strlen(stock) != 0 && ret == 0)
 		return (dealwith_eof(&stock, line));
 	return (get_next_line(fd, line));
 }
 
-/*int		main(void)
+int		main(void)
 {
 	int		fd;
 	int		ret;
@@ -86,6 +84,6 @@ int		get_next_line(int fd, char **line)
 		printf("|%d|%s\n", ret, line);
 		free(line);
 	}
-	printf("|%d|%s", ret, line);
+	printf("|%d|", ret);
 	free(line);
-}*/
+}
