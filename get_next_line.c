@@ -6,7 +6,7 @@
 /*   By: liferrer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/02 14:51:29 by liferrer          #+#    #+#             */
-/*   Updated: 2020/03/11 16:48:11 by liferrer         ###   ########.fr       */
+/*   Updated: 2020/03/12 13:42:45 by liferrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ int		get_stock_split(char **stock, char **line)
 	char			*tmp;
 
 	i = 0;
-//	printf("dealing with getstocksplit %s\n", *stock);
 	while ((*stock)[i] != '\n')
 		i++;
 	*line = ft_substr(*stock, 0, i);
@@ -34,13 +33,11 @@ int		dealwith_eof(char **stock, char **line)
 	int				i;
 
 	i = 0;
-//	printf("dealing with eof %s\n", *stock);
 	*line = ft_strdup(*stock);
 	tmp = *stock;
 	*stock = ft_strdup("");
 	free(tmp);
 	return (0);
-
 }
 
 int		get_next_line(int fd, char **line)
@@ -50,14 +47,14 @@ int		get_next_line(int fd, char **line)
 	static char		*stock = NULL;
 
 	ret = 0;
-	if (fd < 0 || fd > OPEN_MAX || !line || !fd)
+	if (!fd || fd < 0 || fd > OPEN_MAX || read(fd, buffer, 0) < 0 || !line)
 		return (-1);
 	if (!stock)
-		stock =ft_strdup("");
+		stock = ft_strdup("");
 	if (!ft_strchr(stock, '\n'))
 	{
 		ret = read(fd, buffer, BUFFER_SIZE);
-		buffer[BUFFER_SIZE] = '\0';
+		buffer[ret] = '\0';
 		stock = ft_strjoin(stock, buffer);
 	}
 	if (ft_strchr(stock, '\n'))
@@ -79,7 +76,7 @@ int		main(void)
 		if (ret == -1)
 		{
 			printf("error\n");
-			return(-1);
+			return (-1);
 		}
 		printf("|%d|%s\n", ret, line);
 		free(line);
