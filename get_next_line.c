@@ -54,7 +54,7 @@ int		get_next_line(int fd, char **line)
 	if (!ft_strchr(stock, '\n'))
 	{
 		ret = read(fd, buffer, BUFFER_SIZE);
-		buffer[ret] = '\0';
+		buffer[BUFFER_SIZE] = '\0';
 		stock = ft_strjoin(stock, buffer);
 	}
 	if (ft_strchr(stock, '\n'))
@@ -64,7 +64,7 @@ int		get_next_line(int fd, char **line)
 	return (get_next_line(fd, line));
 }
 
-int		main(void)
+/* int		main(void)
 {
 	int		fd;
 	int		ret;
@@ -83,4 +83,4 @@ int		main(void)
 	}
 	printf("|%d|", ret);
 	free(line);
-}
+}*/
