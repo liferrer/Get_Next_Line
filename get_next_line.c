@@ -6,18 +6,19 @@
 /*   By: liferrer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/02 14:51:29 by liferrer          #+#    #+#             */
-/*   Updated: 2020/03/12 13:42:45 by liferrer         ###   ########.fr       */
+/*   Updated: 2020/03/11 16:48:11 by liferrer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-int		get_stock_split(char **stock, char **line)
+int	get_stock_split(char **stock, char **line)
 {
-	int				i;
-	char			*tmp;
+	int	i;
+	char	*tmp;
 
 	i = 0;
+	//	printf("dealing with getstocksplit %s\n", *stock);
 	while ((*stock)[i] != '\n')
 		i++;
 	*line = ft_substr(*stock, 0, i);
@@ -27,47 +28,51 @@ int		get_stock_split(char **stock, char **line)
 	return (1);
 }
 
-int		dealwith_eof(char **stock, char **line)
+int	dealwith_eof(char **stock, char **line)
 {
-	char			*tmp;
-	int				i;
+	char	*tmp;
+	int	i;
 
 	i = 0;
+	//	printf("dealing with eof\n");
 	*line = ft_strdup(*stock);
 	tmp = *stock;
 	*stock = ft_strdup("");
 	free(tmp);
+	free(*stock);
 	return (0);
+
 }
 
-int		get_next_line(int fd, char **line)
+int	get_next_line(int fd, char **line)
 {
-	int				ret;
-	char			buffer[BUFFER_SIZE + 1];
-	static char		*stock = NULL;
+	int	ret;
+	char	buffer[BUFFER_SIZE + 1];
+	static char	*stock = NULL;
 
 	ret = 0;
-	if (!fd || fd < 0 || fd > OPEN_MAX || read(fd, buffer, 0) < 0 || !line)
+	if (fd < 0 || fd > OPEN_MAX || BUFFER_SIZE < 1 || line == NULL)
 		return (-1);
 	if (!stock)
 		stock = ft_strdup("");
 	if (!ft_strchr(stock, '\n'))
 	{
-		ret = read(fd, buffer, BUFFER_SIZE);
-		buffer[BUFFER_SIZE] = '\0';
+		if ((ret = read(fd, buffer, BUFFER_SIZE)) == -1)
+			return (-1);
+		buffer[ret] = '\0';
 		stock = ft_strjoin(stock, buffer);
 	}
 	if (ft_strchr(stock, '\n'))
 		return (get_stock_split(&stock, line));
-	else if (ft_strlen(stock) != 0 && ret == 0)
+	else if (ret == 0)
 		return (dealwith_eof(&stock, line));
 	return (get_next_line(fd, line));
 }
 
-/* int		main(void)
+int	main(void)
 {
-	int		fd;
-	int		ret;
+	int	fd;
+	int	ret;
 	char	*line;
 
 	fd = open("test.txt", O_RDONLY);
@@ -76,11 +81,12 @@ int		get_next_line(int fd, char **line)
 		if (ret == -1)
 		{
 			printf("error\n");
-			return (-1);
+			return(-1);
 		}
 		printf("|%d|%s\n", ret, line);
 		free(line);
 	}
 	printf("|%d|", ret);
+		while (1);
 	free(line);
-}*/
+}

@@ -12,7 +12,7 @@
 
 #include "get_next_line.h"
 
-size_t			ft_strlen(const char *str)
+size_t	ft_strlen(const char *str)
 {
 	size_t i;
 
@@ -22,10 +22,10 @@ size_t			ft_strlen(const char *str)
 	return (i);
 }
 
-char			*ft_strchr(char *s, int c)
+char	*ft_strchr(char *s, int c)
 {
 	char	*str;
-	int		i;
+	int	i;
 
 	str = (char *)s;
 	i = 0;
@@ -48,10 +48,10 @@ char			*ft_strchr(char *s, int c)
 	return (NULL);
 }
 
-char			*ft_strdup(char *s1)
+char	*ft_strdup(char *s1)
 {
 	char	*str;
-	int		i;
+	int	i;
 
 	i = 0;
 	if (!(str = (char *)malloc((ft_strlen((char*)s1) + 1))))
@@ -62,24 +62,24 @@ char			*ft_strdup(char *s1)
 		i++;
 	}
 	str[i] = '\0';
-/*	if (s1)
+	if (s1)
 	{
 		s1 = NULL;
 		free(s1);
-	}*/
+	}
 	return (str);
 }
 
-char			*ft_strjoin(char *s1, char *s2)
+char	*ft_strjoin(char *s1, char *s2)
 {
-	int		i;
-	int		j;
+	int	i;
+	int	j;
 	char	*cpy;
 
 	i = 0;
 	j = 0;
 	if (!(cpy = (char *)malloc(sizeof(char)
-	* (ft_strlen(s1) + ft_strlen(s2) + 1))))
+					* (ft_strlen(s1) + ft_strlen(s2) + 1))))
 		return (0);
 	while (s1[i] != '\0')
 	{
@@ -93,20 +93,22 @@ char			*ft_strjoin(char *s1, char *s2)
 		j++;
 	}
 	cpy[i] = '\0';
+	if (s1)
+		free(s1);
 	return (cpy);
 }
 
-char			*ft_substr(char const *s, unsigned int start, size_t len)
+char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
 	unsigned int	i;
 	unsigned int	j;
-	char			*str;
+	char	*str;
 
 	i = start;
 	j = 0;
 	if (!s)
 		return (NULL);
-	if (start > ft_strlen(s))
+	if (start >= ft_strlen(s))
 		return (ft_strdup(""));
 	if (!(str = (char*)malloc(sizeof(char) * (len + 1))))
 		return (NULL);
