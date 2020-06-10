@@ -31,17 +31,11 @@ int	get_stock_split(char **stock, char **line)
 int	dealwith_eof(char **stock, char **line)
 {
 	char	*tmp;
-	int	i;
 
-	i = 0;
 	//	printf("dealing with eof\n");
 	*line = ft_strdup(*stock);
-	tmp = *stock;
-	*stock = ft_strdup("");
-	free(tmp);
 	free(*stock);
 	return (0);
-
 }
 
 int	get_next_line(int fd, char **line)
